@@ -59,6 +59,11 @@ public class player_db{
         return idx;
     }
 
+    public String loginPos(int i){
+        String a = p[i-1].nick;
+        return a;
+    }
+
     private void initializeDB(){
         for(int i = 0; i < p.length;i++){
          p[i].ndname = " ";
@@ -68,4 +73,16 @@ public class player_db{
         }
     }
 
+    public void printDB(){
+        for(int i = 0; i < idx;i++){
+            System.out.print(p[i].nick);
+            System.out.print(" ");
+            System.out.print(p[i].stname);  
+            System.out.print(" ");    
+            System.out.print(p[i].ndname);
+             System.out.print(" ");    
+            System.out.print(p[i].userID);
+            System.out.println(" ");
+        }
+    }
 }

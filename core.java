@@ -99,14 +99,20 @@ public class core{
        
         while(rd.next()){
             String login = rd.getString("login");
-            if(p.exists(login)){           
+            System.out.println(login);
+            System.out.println(p.loginPos(p.idx()));
+
+            if(!p.exists(login)){           
                 break;
             }
             else{
-             p.addPlayer(rd.getString("FirstName"), rd.getString("LastName"),Integer.parseInt(rd.getString("UserID")), rd.getString("login"));
+            ResultSet rf = st.executeQuery("select UserID,login,FirstName,LastName from dbo.UserProfiles where login = '"+login+"'");
+            System.out.println("select UserID,login,FirstName,LastName from dbo.UserProfiles where login='"+login+"'");
+            rf.next();
+             p.addPlayer(rf.getString("FirstName"), rf.getString("LastName"),Integer.parseInt(rf.getString("UserID")), rf.getString("login"));
             }
          }
-        
+        p.printDB();
 
 
 
