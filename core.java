@@ -40,6 +40,14 @@ public class core{
         System.out.println("Populating Player Class");
         player_db p = populatePlayerClass(u.url,u.user,u.pass);
 
+        System.out.println("Suceeded !");
+        System.out.println("----------------------------------");
+        System.out.println("Building Answer Database for each user");
+        System.out.println("Success!");
+
+        
+
+
     }
     
     public static void connectToDb(String url,String user, String pass)throws SQLException{
