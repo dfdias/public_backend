@@ -2,18 +2,20 @@ import java.util.Arrays;
 
 public class player_db{
 
-    private player[] p;
-    private int idx,size;
+    private player[] p = new player[100];
+    private int idx = 0;
+    private int size = 0;
 
     public player_db (int size){//class contructor
 
     this.p =new player[size];
     this.size = size;
+    this.idx = 0;
     }
 
     public boolean exists(String login){
         boolean flag = false;
-        for(int i = 0; i < p.length;i++){
+        for(int i = 0; i <idx;i++){
             if(login.equals(p[i].nick)){
                 flag = true;
             }
@@ -23,17 +25,16 @@ public class player_db{
         return flag;
     }
 
-    public void addPlayer(String login,int userID,String stname,String ndname){   
+    public void addPlayer(String stname,String ndname,int userid,String nick){
         if(checkSize()){ //checks if database size is bigger than initialization size
-         p[idx].ndname = ndname;
-         p[idx].stname = stname;
-         p[idx].userID = userID;
-         p[idx].nick = login;
+         player tmp = new player(stname,ndname,userid,nick);
+         p[idx]=tmp;
          idx++;
+
         }
         else{
             extendArray();
-            addPlayer(login, userID, stname, ndname);
+            addPlayer(stname,ndname,userid,nick);
         }
     }
 
@@ -46,9 +47,25 @@ public class player_db{
     }
 
     private void extendArray(){
-        p = Arrays.copyOf([]p, size + 100);//allocates 100+ more positions to be added on database
+        p = Arrays.copyOf(p, size + 100);//allocates 100+ more positions to be added on database
         size += 100;
     }
 
+    public int size(){
+        return size;
+    }
+
+    public int idx(){
+        return idx;
+    }
+
+    private void initializeDB(){
+        for(int i = 0; i < p.length;i++){
+         p[i].ndname = " ";
+         p[i].stname = " ";
+         p[i].userID = 0;
+         p[i].nick = " ";
+        }
+    }
 
 }

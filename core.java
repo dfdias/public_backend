@@ -38,7 +38,7 @@ public class core{
         System.out.println("Evaluating Database Size");
       
         System.out.println("Populating Player Class");
-        player p[] = populatePlayerClass(u.url,u.user,u.pass);
+        player_db p = populatePlayerClass(u.url,u.user,u.pass);
 
     }
     
@@ -77,22 +77,18 @@ public class core{
         }
     }
 
-    public static player[] populatePlayerClass(String url,String user,String pass)throws SQLException{
+    public static player_db populatePlayerClass(String url,String user,String pass)throws SQLException{
        int size = evaluateTableSize(url,user,pass,"UserProfiles");
-        player p[] = new player[size];
+        player_db p = new player_db(size);
         Connection con = DriverManager.getConnection(url,user,pass);
         Statement st = con.createStatement();
 
         //first sweep directly from user Profile Table
         ResultSet rs = st.executeQuery("select UserID,login,FirstName,LastName from dbo.UserProfiles where Course = 'AC'");
-        int i = 0;
         while(rs.next()){
-            player tmp = new player(); 
-            tmp.userID = Integer.parseInt(rs.getString("UserID"));
-            tmp.nick = rs.getString("login");
-            tmp.stname = rs.getString("FirstName");
-            tmp.ndname = rs.getString("LastName");
-            p[i] = tmp;           
+            System.out.println("size=> "+p.size());
+            System.out.println("index=> "+p.idx());
+          p.addPlayer(rs.getString("FirstName"), rs.getString("LastName"),Integer.parseInt(rs.getString("UserID")), rs.getString("login"));
         }
         //second sweep matching megua exercise answer database with userporfile database
         //for students that started using SIACUA's learning platfrom from other course
@@ -102,25 +98,15 @@ public class core{
         ResultSet rd = st.executeQuery("Select login from MegUserAnswer where Course='ACDC' or Course='ACAC' or Course='ACtrans'");
        
         while(rd.next()){
-         for(int j = 0; j<=p.length;j++){
-             String login = rd.getString("login");
-             System.out.println(login);
-             System.out.println(p[j].nick);
-            if(login.equals(p[j].nick)){           
+            String login = rd.getString("login");
+            if(p.exists(login)){           
                 break;
             }
             else{
-                Arrays.copyOf(p,p.length+1);
-                ResultSet pm = st.executeQuery("select UserID,login,FirstName,LastName from dbo.UserProfiles where login='"+login+"'");
-                player tmp2 = new player();
-                tmp2.userID = Integer.parseInt(pm.getString("UserID"));
-                tmp2.nick = pm.getString("login");
-                tmp2.stname = pm.getString("FirstName");
-                tmp2.ndname = pm.getString("LastName");     
-                p[p.length-1] = tmp2;     
+             p.addPlayer(rd.getString("FirstName"), rd.getString("LastName"),Integer.parseInt(rd.getString("UserID")), rd.getString("login"));
             }
          }
-        }
+        
 
 
 

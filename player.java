@@ -4,15 +4,16 @@ public class player{
     int nMec;
     double score;
 
-    //Answer answers[] = new answers[25];
-    public void player(String stname,String ndname,int userid,String nick){
+   // Answer answers[];
+    public  player(String stname,String ndname,int userid,String nick){
          this.ndname = ndname;
          this.stname = stname;
          this.userID = userid;
          this.nick = nick;
     }
 
-   /*public int score(){
+    /*public int score(){
 
-    }*/
+    }
+    */
 }
