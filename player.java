@@ -2,7 +2,7 @@ public class player{
     public String ndname,stname,nick;
     int userID;
     int nMec;
-    double score;
+    double score = 0;
 
    // Answer answers[];
     public  player(String stname,String ndname,int userid,String nick){
