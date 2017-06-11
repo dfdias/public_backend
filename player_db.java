@@ -5,7 +5,7 @@ public class player_db{
     private player[] p = new player[100];
     private int idx = 0;
     private int size = 0;
-
+    
     public player_db (int size){//class contructor
 
     this.p =new player[size];
@@ -25,6 +25,17 @@ public class player_db{
         return flag;
     }
 
+    public int findLogin(String login){
+        int pos = 0;
+        for(int i = 0; i <idx;i++){
+         if(login.equals(p[i].nick)){
+                pos = i;
+                break;
+            }
+        }
+        return pos;
+    }
+
     public void addPlayer(String stname,String ndname,int userid,String nick){
         if(checkSize()){ //checks if database size is bigger than initialization size
          player tmp = new player(stname,ndname,userid,nick);
@@ -36,6 +47,9 @@ public class player_db{
             extendArray();
             addPlayer(stname,ndname,userid,nick);
         }
+    }
+    public void addAnswer(int muaid,int exid,int correct,int pos){
+        p[pos].addAnswer(muaid,exid,correct);        
     }
 
     private boolean checkSize(){

@@ -43,6 +43,7 @@ public class core{
         System.out.println("Suceeded !");
         System.out.println("----------------------------------");
         System.out.println("Building Answer Database for each user");
+        player_answer_db(p,u.url,u.user,u.pass);
         System.out.println("Success!");
 
         
@@ -127,10 +128,25 @@ public class core{
 
         return p;
     }
+
+
+
+    public static void player_answer_db(player_db p,String url, String user,String pass)throws SQLException{
+        Connection con = DriverManager.getConnection(url,user,pass);   
+        Statement st = con.createStatement();
+        ResultSet rs = st.executeQuery("select muaid,exid,login,correct from MegUserAnswer where Course = 'ACDC' or Course ='ACAC'");
+        int num_answ = evaluateTableSize(url, user, pass,"MegUserAnswer");
+        while(rs.next()){
+            int tmpidx = p.findLogin(rs.getString("login"));
+            System.out.println(tmpidx);
+            p.addAnswer(Integer.parseInt(rs.getString("muaid")),Integer.parseInt(rs.getString("exid")),Integer.parseInt(rs.getString("correct")),tmpidx);
+            System.out.println(rs.getString("login"));
+        }
+    }
     public static int evaluateTableSize(String url, String user,String pass, String table)throws SQLException{//prints contentfrom database
          Connection con = DriverManager.getConnection(url,user,pass);   
         Statement st = con.createStatement();
-        ResultSet rs = st.executeQuery("Select UserID from" + " "+table);
+        ResultSet rs = st.executeQuery("Select login from" + " "+table);
         int size = 0;
         while(rs.next()){
            size++;
@@ -142,5 +158,4 @@ public class core{
 }
 class user{
 String user,pass,url,dbname;
-
 }

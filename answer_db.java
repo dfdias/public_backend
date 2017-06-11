@@ -26,7 +26,7 @@ public class answer_db{
             addAnswer(muaid,exid,correct);
         }
     }
-
+    
     private boolean checkSize(){
         if(idx == size){
             return false;
@@ -36,7 +36,7 @@ public class answer_db{
     }
 
     private void extendArray(){
-        a = Arrays.copyOf(a, size + 100);//allocates 100+ more positions to be added on database
+        a = Arrays.copyOf(a, size + 100);//allocates 100+ more positions on array
         size += 100;
     }
 
@@ -44,12 +44,15 @@ public class answer_db{
         return size;
     }
 
+    public int correctPos(int pos){
+        return a[pos].correct;
+    }
     public int idx(){
         return idx;
     }
 
 
-    private void initializeDB(){
+/*    private void initializeDB(){
         for(int i = 0; i < p.length;i++){
          p[i].ndname = " ";
          p[i].stname = " ";
@@ -58,7 +61,7 @@ public class answer_db{
         }
     }
 
-    /*public void printDB(){
+    public void printDB(){
         for(int i = 0; i < idx;i++){
             System.out.print([i].nick);
             System.out.print(" ");

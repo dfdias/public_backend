@@ -1,4 +1,4 @@
-public class answer{//mimics siacua's MegUserAnswer table
+public class answer{//mimics siacua's  database MegUserAnswer table 
     private int correct;
    // private int weight;
     private int exid;
