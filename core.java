@@ -1,6 +1,9 @@
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.Buffer;
 import java.sql.*;
 import java.util.*;
+import java.io.*;
 
 import javax.management.Query;
 
@@ -131,27 +134,38 @@ public class core{
         return p;
     }
     public static void exportHtml(String filename,player_db p)throws IOException{
+        File f = new File(filename);
+        PrintWriter sc = new PrintWriter(f);
         String[] headers = new String[20] ;
         headers[1]="<!DOCTYPE html>";
         headers[2]="<html>";
-        headers[3]="<head>";
-        headers[4]="<body>";
-        headers[5] = " <p style=\"text-align: center;\">ACGAME-SIACUA </p>";
-        headers[6] = " <p style=\"text-align: center;\">HighScore </p>";
-        for(int i =0; i< headers.length;i++){
-            System.out.println(headers[i]);
+        headers[3]=" <head>";
+        headers[4]=" <body>";
+        headers[5] = "  <p style=\"text-align: center;\">ACGAME-SIACUA </p>";
+        headers[6] = "  <p style=\"text-align: center;\">HighScore </p>";
+        headers[7]= " </body>";
+        headers[8]= "</html>";
+        for(int i =0; i< 7;i++){
+            sc.println(headers[i]);
 
         }
-        System.out.print("|      User       |");
-        
-        System.out.print("   Score   |");
-        System.out.println(" ");
 
+        sc.println(" ");
+        sc.println("<center>");
+        sc.print("|      User       |");
+        sc.print("   Score   |");
+        sc.println(" ");
         for(int j = 0;j < p.idx();j++ ){
             player tmp = p.getPlayer(j);
-            System.out.print("|  "+tmp.nick+"  |");
-            System.out.println("   "+tmp.score+"   |");
+            sc.print("<p>"+"|  "+tmp.nick+"  |");
+            sc.println("   "+tmp.score+"   |"+"</p>");
         }       
+        sc.println("/<center>");
+        for(int w =7; w< 9;w++){
+            sc.println(headers[w]);
+
+        }
+        sc.close();
     }
 
 
