@@ -49,6 +49,8 @@ public class core{
         System.out.println("Building Generating User scores");
         p.printDB_score();
         System.out.println("Building Highscore");
+        player_db hi = generateHighscores(p);
+        hi.printDB_score();
 
         
 
@@ -158,6 +160,13 @@ public class core{
         return size;
     }
 
+    public static player_db generateHighscores(player_db p){//clones playerDB and generates sorted player list
+        player_db high = p;
+        high.sort();
+
+        return high;
+
+    }
 
 }
 class user{

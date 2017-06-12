@@ -48,6 +48,20 @@ public class player_db{
             addPlayer(stname,ndname,userid,nick);
         }
     }
+
+    public void addPlayer(player a){
+        if(checkSize()){ //checks if database size is bigger than initialization size
+         player tmp = a;
+         p[idx]=tmp;
+         idx++;
+
+        }
+        else{
+            extendArray();
+            addPlayer(a);
+        }
+
+    }
     public void addAnswer(int muaid,int exid,int correct,int pos){
         p[pos].addAnswer(muaid,exid,correct);        
     }
@@ -76,6 +90,10 @@ public class player_db{
     public String loginPos(int i){
         String a = p[i-1].nick;
         return a;
+    }
+
+    public player getPlayer(int pos){
+        return p[pos];
     }
 
     private void initializeDB(){
@@ -113,5 +131,31 @@ public class player_db{
             System.out.println(p[i].score);
             System.out.println(" ");
         }
+    }
+
+    public void sort(){
+        player[] aux = new player[100];
+        boolean swap = true;
+        aux = p;
+        int j = 0;
+        while(swap){
+            swap = false;
+            j++;
+         for(int i = 0; i < idx-j;i++ ){
+                if(p[i].score > aux[i+1].score){
+                     player tmp = aux[i+1];
+                     aux[i+1]=p[i];
+                    p[i]=tmp;
+                    swap = true;
+                }
+            }
+       }
+       player[] aux2 = new player[size];
+       int k = 0;
+       for(int i = idx-1;i>=0;i--){
+            aux2[k] = p[i];
+            k++;
+       }
+       p = aux2;
     }
 }
