@@ -11,5 +11,8 @@ public class answer{//mimics siacua's  database MegUserAnswer table
         this.correct = correct;
     }
 
+    public int correct(){
+        return correct;
+    }
         
 }

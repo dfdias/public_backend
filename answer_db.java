@@ -45,7 +45,7 @@ public class answer_db{
     }
 
     public int correctPos(int pos){
-        return a[pos].correct;
+        return a[pos].correct();
     }
     public int idx(){
         return idx;

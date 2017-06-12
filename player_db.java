@@ -99,4 +99,19 @@ public class player_db{
             System.out.println(" ");
         }
     }
+        public void printDB_score(){
+        for(int i = 0; i < idx;i++){
+            System.out.print(p[i].nick);
+            System.out.print(" ");
+            System.out.print(p[i].stname);  
+            System.out.print(" ");    
+            System.out.print(p[i].ndname);
+            System.out.print(" ");    
+            System.out.print(p[i].userID);
+            System.out.print(" ");
+            p[i].generate_score();
+            System.out.println(p[i].score);
+            System.out.println(" ");
+        }
+    }
 }

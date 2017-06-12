@@ -28,10 +28,10 @@ public class core{
         connectToDb(u.url,u.user,u.pass);
         System.out.println("Suceeded !");
         System.out.println("----------------------------------");
-        System.out.println("Printing Table Metadata");
-        printMetaData(u.url,u.user,u.pass);
+       // System.out.println("Printing Table Metadata");
+      //  printMetaData(u.url,u.user,u.pass);
         System.out.println("Querying the Database");
-        querie("Select exid,conceptid,peso,course From MegExerciseConcept" , u.url, u.user, u.pass);
+        querie("Select exid,conceptid,peso,course From MegExerciseConcept where course='ACDC'" , u.url, u.user, u.pass);
         System.out.println("Suceeded !");
         System.out.println("----------------------------------");
         System.out.println("Creating player class");
@@ -45,6 +45,10 @@ public class core{
         System.out.println("Building Answer Database for each user");
         player_answer_db(p,u.url,u.user,u.pass);
         System.out.println("Success!");
+        System.out.println("----------------------------------");
+        System.out.println("Building Generating User scores");
+        p.printDB_score();
+        System.out.println("Building Highscore");
 
         
 
@@ -95,9 +99,9 @@ public class core{
         //first sweep directly from user Profile Table
         ResultSet rs = st.executeQuery("select UserID,login,FirstName,LastName from dbo.UserProfiles where Course = 'AC'");
         while(rs.next()){
-            System.out.println("size=> "+p.size());
-            System.out.println("index=> "+p.idx());
-          p.addPlayer(rs.getString("FirstName"), rs.getString("LastName"),Integer.parseInt(rs.getString("UserID")), rs.getString("login"));
+            //System.out.println("size=> "+p.size());
+            //System.out.println("index=> "+p.idx());
+            p.addPlayer(rs.getString("FirstName"), rs.getString("LastName"),Integer.parseInt(rs.getString("UserID")), rs.getString("login"));
         }
         //second sweep matching megua exercise answer database with userporfile database
         //for students that started using SIACUA's learning platfrom from other course
@@ -108,15 +112,15 @@ public class core{
        
         while(rd.next()){
             String login = rd.getString("login");
-            System.out.println(login);
-            System.out.println(p.loginPos(p.idx()));
+           // System.out.println(login);
+            //System.out.println(p.loginPos(p.idx()));
 
             if(!p.exists(login)){           
                 break;
             }
             else{
             ResultSet rf = st.executeQuery("select UserID,login,FirstName,LastName from dbo.UserProfiles where login = '"+login+"'");
-            System.out.println("select UserID,login,FirstName,LastName from dbo.UserProfiles where login='"+login+"'");
+            //System.out.println("select UserID,login,FirstName,LastName from dbo.UserProfiles where login='"+login+"'");
             rf.next();
              p.addPlayer(rf.getString("FirstName"), rf.getString("LastName"),Integer.parseInt(rf.getString("UserID")), rf.getString("login"));
             }
@@ -138,9 +142,9 @@ public class core{
         int num_answ = evaluateTableSize(url, user, pass,"MegUserAnswer");
         while(rs.next()){
             int tmpidx = p.findLogin(rs.getString("login"));
-            System.out.println(tmpidx);
+            //System.out.println(tmpidx);
             p.addAnswer(Integer.parseInt(rs.getString("muaid")),Integer.parseInt(rs.getString("exid")),Integer.parseInt(rs.getString("correct")),tmpidx);
-            System.out.println(rs.getString("login"));
+          //  System.out.println(rs.getString("login"));
         }
     }
     public static int evaluateTableSize(String url, String user,String pass, String table)throws SQLException{//prints contentfrom database
