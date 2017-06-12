@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 
@@ -6,7 +7,7 @@ import javax.management.Query;
 import com.microsoft.sqlserver.jdbc.SQLServerDriver;
 public class core{
 
-    public static void main(String []args)throws SQLException{
+    public static void main(String []args)throws SQLException,IOException{
         //Scanner sc = new Scanner(System.in);
         System.out.println("Starting Script");
         System.out.println("----------------------------------");
@@ -51,9 +52,7 @@ public class core{
         System.out.println("Building Highscore");
         player_db hi = generateHighscores(p);
         hi.printDB_score();
-
-        
-
+        exportHtml("Highscore_test.html",hi);
 
     }
     
@@ -129,11 +128,32 @@ public class core{
          }
         p.printDB();
 
-
-
-
         return p;
     }
+    public static void exportHtml(String filename,player_db p)throws IOException{
+        String[] headers = new String[20] ;
+        headers[1]="<!DOCTYPE html>";
+        headers[2]="<html>";
+        headers[3]="<head>";
+        headers[4]="<body>";
+        headers[5] = " <p style=\"text-align: center;\">ACGAME-SIACUA </p>";
+        headers[6] = " <p style=\"text-align: center;\">HighScore </p>";
+        for(int i =0; i< headers.length;i++){
+            System.out.println(headers[i]);
+
+        }
+        System.out.print("|      User       |");
+        
+        System.out.print("   Score   |");
+        System.out.println(" ");
+
+        for(int j = 0;j < p.idx();j++ ){
+            player tmp = p.getPlayer(j);
+            System.out.print("|  "+tmp.nick+"  |");
+            System.out.println("   "+tmp.score+"   |");
+        }       
+    }
+
 
 
 
