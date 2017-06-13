@@ -145,7 +145,7 @@ public class core{
         headers[6] = "  <p style=\"text-align: center;\">HighScore </p>";
         headers[7]= " </body>";
         headers[8]= "</html>";
-        for(int i =0; i< 7;i++){
+        for(int i =1; i< 7;i++){
             sc.println(headers[i]);
 
         }
